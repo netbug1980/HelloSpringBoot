@@ -1,0 +1,9 @@
+server:
+  port: 8080
+  contextPath: /web
+  tomcat:
+    uriEncoding: UTF-8
+#   默认是200
+    maxThreads: 800
+logging:
+  config: ./config/logback-spring.xml
