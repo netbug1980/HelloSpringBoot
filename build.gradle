@@ -12,15 +12,48 @@ apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'application'
 
+version = '1.0.0-SNAPSHOT'
+ext {
+	Timestamp = new Date().format('yyyyMMddHHmm')
+	BuildNumber = System.getenv("BUILD_NUMBER")
+	if(null == BuildNumber || "" == BuildNumber){
+		BuildNumber = 'x';
+	}
+
+}
+/*map.each{key,value -> 
+ println key + ':' + value
+ }*/
+println Timestamp
+println BuildNumber
+println projectDir
+println project.version
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 springBoot { mainClass = 'com.cdv.spring.MyApplication' }
 
 distributions {
+	//发布时包括config下的内容
 	main {
 		contents {
 			from ("${projectDir}/config") { into "config" }
 		}
+	}
+}
+
+jar.doFirst {
+	manifest {
+		def manifestFile = "${projectDir}/META-INF/MANIFEST.MF"
+		if(new File(manifestFile).exists())
+			from (manifestFile)
+		attributes 'Implementation-Title':project.name
+		if(project.version.endsWith('-SNAPSHOT')){
+			attributes 'Implementation-Version':project.version + project.ext.Timestamp
+		}else{
+			attributes 'Implementation-Version':project.version
+		}
+		attributes 'Implementation-BuildDateTime':new Date()
 	}
 }
 
