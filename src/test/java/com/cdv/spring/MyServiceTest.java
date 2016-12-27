@@ -20,6 +20,7 @@ public class MyServiceTest {
 
 	@Test
 	public void getName() {
+		myService.run();
 		assertTrue(myService.getName().equals("Hello Spring Boot!"));
 	}
 

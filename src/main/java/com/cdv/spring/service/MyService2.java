@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @EnableScheduling
-public class MyService extends AbstractService {
+public class MyService2 extends AbstractService {
 	
-	public MyService (){
-		this.serviceName = "MyService";
+	public MyService2(){
+		this.serviceName = "MyService2";
 	}
 	
 	public String getName() {
@@ -29,13 +29,13 @@ public class MyService extends AbstractService {
 	}
 
 	@Override
-	@Value("${enable:false}")
+	@Value("${enable:true}")
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 
 	@Override
-	@Value("${defName:测试}")
+	@Value("${defName:测试02}")
 	public void setDefName(String defName) {
 		this.defName = defName;
 	}
